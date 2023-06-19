@@ -1,0 +1,28 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    padding-right: 8rem;
+    top: -0.8rem;
+    position: relative;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+
+        .add-city-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .add-city-wrapper {
+                display: flex;
+                justify-content: flex-end;
+                width: 50%;
+                position: absolute;
+                left: 105%;
+                flex-direction: column;
+            }
+        }
+    }
+}

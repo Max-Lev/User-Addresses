@@ -1,0 +1,32 @@
+:host {
+    display: flex;
+
+    .container {
+
+        .details {
+
+            margin: 1rem;
+            margin-bottom: 0;
+            display: flex;
+
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+
+                :first-child {
+                    max-width: 85%;
+                }
+            }
+        }
+
+        .address-wrapper {
+            margin-left: 1rem;
+            display: flex;
+            overflow-x: scroll;
+        }
+    }
+
+
+
+
+}

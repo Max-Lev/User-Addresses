@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.app-container {
+    width: 85%;
+    margin: auto;
+    height: 100%;
+}
+
+.container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    >h1 {
+        font-weight: bold;
+    }
+
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    width: 100%;
+
+    button.mdc-button {
+        height: 45px;
+    }
+
+    .remove.mdc-button {
+        width: 85%;
+        margin-left: -1rem;
+    }
+
+    .add {
+        // width: 20%;
+    }
+
+    .save {
+        // width: 15%;
+    }
+}

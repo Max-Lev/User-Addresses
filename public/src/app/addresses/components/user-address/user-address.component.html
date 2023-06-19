@@ -1,0 +1,36 @@
+<form [formGroup]="name" class="container">
+
+    <mat-form-field appearance="outline">
+        <mat-label>Address Name</mat-label>
+        <input formControlName="name" matInput placeholder="">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Select Country</mat-label>
+        <mat-select formControlName="countrId">
+            <mat-option [value]="country.id" *ngFor="let country of countries$ | async">{{country.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <section class="add-city-container">
+        <mat-form-field>
+            <mat-label>Select City</mat-label>
+            <mat-select formControlName="cityId">
+                <mat-option [value]="city.id" *ngFor="let city of cities$ | async">{{city.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="add-city-wrapper">
+            <button [disabled]="(name.get('countrId').value!==null) ? false:true" (click)="addCity()" mat-raised-button
+                color="accent">Add city</button>
+        </div>
+    </section>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Street</mat-label>
+        <input formControlName="street" matInput placeholder="">
+    </mat-form-field>
+
+    <div class="action-btn">
+        <button (click)="removeForm(name,index)" class="remove" mat-raised-button color="warn">Remove address</button>
+    </div>
+</form>

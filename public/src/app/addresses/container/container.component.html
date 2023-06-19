@@ -1,0 +1,52 @@
+<section class="container">
+    <h1>Add person form</h1>
+    <form [formGroup]="form">
+
+        <section class="details">
+            <section class="wrapper">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input formControlName="name" matInput placeholder="">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Birthdate</mat-label>
+                    <input formControlName="birthdate" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                
+            </section>
+        </section>
+
+
+        <section class="address-wrapper">
+            <ng-container formArrayName="addresses">
+                <ng-container *ngFor="let cntrl of getAddressesArray.controls;let i = index">
+                    <ng-container [formGroupName]="i">
+                        <app-user-address [name]="cntrl" [countries$]="countries$" [cities$]="cities$"
+                            (counteryChangeEmitter)="counteryChangeHandler($event)"
+                            (addCityEmitter)="addCityEmitterHandler($event)"
+                            (removeEmitter)="removeEmitterHandler($event)" [index]="i"></app-user-address>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </section>
+
+    </form>
+
+    <section>
+        <div class="action-btn">
+            <button class="add" (click)="addAddress()" mat-raised-button color="primary">Add address</button>
+        </div>
+        <div class="action-btn">
+            <button class="save" [disabled]="(form.valid) ? false : true" (click)="save()" mat-raised-button
+                color="primary">Save</button>
+        </div>
+        <div class="action-btn">
+            <button class="add" (click)="nav()" mat-raised-button color="primary">Users</button>
+        </div>
+    </section>
+
+</section>

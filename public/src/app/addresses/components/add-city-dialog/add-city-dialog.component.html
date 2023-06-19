@@ -1,0 +1,14 @@
+<form>
+    <h1 mat-dialog-title>Add city to {{title}}</h1>
+    <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>City name :</mat-label>
+            <input [formControl]="control" matInput>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close (click)="cancel()">Cancel</button>
+        <button [disabled]="(cityName.length < 2) ? true : false" type="submit" mat-button mat-dialog-close
+            (click)="ok()">Ok</button>
+    </div>
+</form>
