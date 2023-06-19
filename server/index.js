@@ -11,11 +11,12 @@ const app = express()
 const port = 3000;
 const jsonMiddleware = express.json();
 
-app.use(cors({
-  origin: 'https://user-addresses.vercel.app/',
-  optionsSuccessStatus: 200
-}));
-app.use(express.static('../public/dist/sea-lights/'));
+app.use(cors());
+// app.use(cors({
+//   origin: 'https://user-addresses.vercel.app/',
+//   optionsSuccessStatus: 200
+// }));
+// app.use(express.static('../public/dist/sea-lights/'));
 swaggerInit(app);
 
 app.get('/', (req, res) => {
