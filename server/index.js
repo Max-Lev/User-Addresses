@@ -21,7 +21,7 @@ swaggerInit(app);
 
 app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
-  res.status(200).send(`<h1>Demo Server - Good Luck :)</h1>`);
+  res.status(200).send(`<h1>Demo Server</h1>`);
 });
 
 app.get('/api/persons', (req, res) => {
