@@ -18,13 +18,16 @@ app.use(cors({
 //   origin: 'https://user-addresses.vercel.app/',
 //   optionsSuccessStatus: 200
 // }));
-// app.use(express.static('../public/dist/sea-lights/'));
+app.use(express.static('../public/dist/sea-lights/'));
+app.set('view engine', 'pug');
+
 swaggerInit(app);
 
 app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.status(200).send(`<h1>Demo Server</h1>`);
+  // res.status(200).send(`<h1>Demo Server</h1>`);
+  res.sendFile('index.html',{root:__dirname})
 });
 
 app.get('/api/persons', (req, res) => {
