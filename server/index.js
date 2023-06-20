@@ -11,7 +11,9 @@ const app = express()
 const port = 3000;
 const jsonMiddleware = express.json();
 
-app.use(cors());
+app.use(cors({
+  origin:'*'
+}));
 // app.use(cors({
 //   origin: 'https://user-addresses.vercel.app/',
 //   optionsSuccessStatus: 200
