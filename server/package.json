@@ -6,9 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "npm run angular && node index.js",
-    "angular":"cd ../public && npm run build",
-    "app": "concurrently \"cd ../public && npm run build\" \"npm run start\""
+    "build2": "npm run angular && node index.js",
+    "angular2":"cd ../public && npm run build",
+    "app2": "concurrently \"cd ../public && npm run build\" \"npm run start\""
   },
   "author": "",
   "license": "ISC",
