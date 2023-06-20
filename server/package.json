@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "npm run angular && node index.js",
+    "start": "node index.js",
+    "build": "npm run angular && node index.js",
     "angular":"cd ../public && npm run build",
     "app": "concurrently \"cd ../public && npm run build\" \"npm run start\""
   },
