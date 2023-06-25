@@ -26,10 +26,10 @@ const persons = () => {
     };
 }
 
-// export {
-//     persons,
-//     addPerson
-// };
+export const {
+    addPerson,
+    getPersons
+} = persons();
 
 // module.exports = {
 //     addPerson,
@@ -37,6 +37,6 @@ const persons = () => {
 // // } = persons;
 // export function persons;
 
-export {
-    persons
-}
+// export {
+//     persons
+// }

@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 
 const countries = () => {
 
-    const data: any[] = [{
+    const data = [{
         id: 1,
         name: "Italy",
         cities: []
@@ -34,7 +34,7 @@ const countries = () => {
     };
 
     return {
-        addCity: (payload: any): any => {
+        addCity: (payload: any) => {
             const { countryId, name } = payload;
             if (_.some([name], _.isEmpty) && !isNaN(countryId)) {
                 throw new Error('Missing or invalid argument for adding a city [countryId, cityId, name]');
@@ -43,7 +43,7 @@ const countries = () => {
             if (!country.length) {
                 throw new Error(`No country with Id: ${countryId}`);
             }
-            const cities = country[0].cities;
+            const cities: any = country[0].cities;
             const cityId = cities.length;
             const city = cities.filter((city: any) => city.name === name);
             if (city.length) {
@@ -58,12 +58,18 @@ const countries = () => {
     }
 };
 
+export const {
+    addCity,
+    getCountries,
+    getCountryById,
+    getCitiesByCountryId
+} = countries();
 // module.exports = {
 //     addCity,
 //     getCountries,
 //     getCountryById,
 //     getCitiesByCountryId
 // } = countries();
-export {
-    countries
-};
+// export {
+//     countries
+// };

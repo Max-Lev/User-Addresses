@@ -1,6 +1,7 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.countries = void 0;
+exports.getCitiesByCountryId = exports.getCountryById = exports.getCountries = exports.addCity = void 0;
 // const _ = require("lodash");
 const _ = require("lodash");
 // import { logger } from '../logger';
@@ -56,5 +57,14 @@ const countries = () => {
         getCitiesByCountryId,
     };
 };
-exports.countries = countries;
+_a = countries(), exports.addCity = _a.addCity, exports.getCountries = _a.getCountries, exports.getCountryById = _a.getCountryById, exports.getCitiesByCountryId = _a.getCitiesByCountryId;
+// module.exports = {
+//     addCity,
+//     getCountries,
+//     getCountryById,
+//     getCitiesByCountryId
+// } = countries();
+// export {
+//     countries
+// };
 //# sourceMappingURL=countries.js.map

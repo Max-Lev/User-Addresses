@@ -1,6 +1,7 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.persons = void 0;
+exports.getPersons = exports.addPerson = void 0;
 const _ = require("lodash");
 // let addPerson;
 const persons = () => {
@@ -23,5 +24,13 @@ const persons = () => {
         getPersons: () => persons
     };
 };
-exports.persons = persons;
+_a = persons(), exports.addPerson = _a.addPerson, exports.getPersons = _a.getPersons;
+// module.exports = {
+//     addPerson,
+//     getPersons,
+// // } = persons;
+// export function persons;
+// export {
+//     persons
+// }
 //# sourceMappingURL=persons.js.map
