@@ -3,24 +3,37 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
+    "cpdir": "copyfiles lib/*.js functions",
+    "cpdirFiles": "npx copyfiles --flat *.js functions",
+    "package-functions": "babel *.js --out-dir 'functions' --presets=es2015 --copy-files --ignore 'node_modules'",
     "build2": "npm run angular && node index.js",
-    "angular2":"cd ../public && npm run build",
+    "angular2": "cd ../public && npm run build",
     "app2": "concurrently \"cd ../public && npm run build\" \"npm run start\""
+  },
+  "engines": {
+    "node": "18"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "concurrently": "^8.2.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "figlet": "^1.6.0",
+    "firebase-admin": "^11.9.0",
+    "firebase-functions": "^4.4.1",
+    "firebase-tools": "^12.4.0",
     "lodash": "^4.17.21",
     "pug": "^3.0.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
   }
 }

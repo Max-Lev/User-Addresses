@@ -1,19 +1,21 @@
 import express from "express";
 import cors from "cors";
-
+import bodyParser from "body-parser";
 import { swaggerInit } from "./swagger.js"
 import { addPerson, getPersons } from "./lib/persons.js";
 import { addCity, getCitiesByCountryId, getCountries } from "./lib/countries.js";
 import logger from "./logger.js";
 import figlet from "figlet";
-
-const app = express()
+import functions from "firebase-functions";
+import admin from "firebase-admin";
+admin.initializeApp(functions.config().firebase);
+const app = express();
 const port = 3000;
 const jsonMiddleware = express.json();
-
-app.use(cors({
-  origin:'*'
-}));
+// app.use('/api/v1', app);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors({ origin: '*' }));
 // app.use(cors({
 //   origin: 'https://user-addresses.vercel.app/',
 //   optionsSuccessStatus: 200
@@ -27,7 +29,7 @@ app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   // res.status(200).send(`<h1>Demo Server</h1>`);
-  res.sendFile('index.html',{root:__dirname})
+  res.sendFile('index.html', { root: __dirname })
 });
 
 app.get('/api/persons', (req, res) => {
@@ -101,4 +103,5 @@ app.listen(port, () => {
 
 // Export the Express API
 // module.exports = app;
-export default app;
+// export default app;
+exports.webApi = functions.https.onRequest(app);
