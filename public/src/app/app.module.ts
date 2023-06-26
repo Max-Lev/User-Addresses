@@ -17,9 +17,7 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    MatNativeDateModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAnalyticsModule
+    MatNativeDateModule
   ],
   providers: [
     {
