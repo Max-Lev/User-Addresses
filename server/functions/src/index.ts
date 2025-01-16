@@ -101,7 +101,7 @@ app.get('/api/countries', (req, res) => {
     }
 });
 
-// app.listen(3000, () => {
+app.listen(3000, () => {
 //     // const title = figlet.textSync("Demo Server", {
 //     //     font: "Standard",
 //     //     horizontalLayout: "default",
@@ -110,6 +110,7 @@ app.get('/api/countries', (req, res) => {
 //     // });
 //     // logger().log(title, "\n\n");
 //     // logger().info(`Listening to port ${3000} \n`);
-// });
-
-export const webApi = functions.https.onRequest(app);
+console.log('server 3000')
+});
+export default app;
+// export const webApi = functions.https.onRequest(app);

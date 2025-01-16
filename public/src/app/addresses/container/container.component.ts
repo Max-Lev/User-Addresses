@@ -87,6 +87,7 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   counteryChangeHandler(action: { countryId: number, index: number }) {
+    
     const component = this.userAddressViewChildren.get(action.index);
     component.cities$ = this.personsService.getCitiesByCountryId$(action.countryId);
   }
@@ -94,7 +95,7 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
   addCityEmitterHandler(payload: { formValue: Address, index: number }) {
 
     const component: UserAddressComponent = this.userAddressViewChildren.get(payload.index);
-
+    console.log('active component ',component)
     let cityPayload: City;
 
     component.cities$ = this.dialog.open(AddCityDialogComponent, {
@@ -123,6 +124,7 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
         return this.personsService.getCitiesByCountryId$(+payload.formValue.countrId);
       }))
       .pipe(map((cities: City[]) => {
+        debugger;
         this.cities$ = of(cities);
         this.newCity(cities, component, cityPayload);
         return cities;
@@ -131,10 +133,15 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   newCity(cities: City[], component: UserAddressComponent, cityPayload: City) {
+    this.personsService.getCountries$().subscribe(c=>console.log(c));
+    console.log(this.getAddressesArray);
+    debugger;
     const newCity = cities.find((city: City) => city.name === cityPayload.name);
     const componentForm = component.name as FormGroup;
-    componentForm.get('cityId').setValue(newCity.id);
-    componentForm.get('cityId').updateValueAndValidity({ emitEvent: true, onlySelf: false });
+    this.getAddressesArray.controls[component.index].get('cityId').setValue(newCity.id);
+    this.getAddressesArray.controls[component.index].updateValueAndValidity({ emitEvent: false, onlySelf: true });
+    // componentForm.get('cityId').setValue(newCity.id);
+    // componentForm.get('cityId').updateValueAndValidity({ emitEvent: true, onlySelf: false });
   }
 
   save() {

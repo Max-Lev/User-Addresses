@@ -8,8 +8,6 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.webApi = void 0;
-const functions = require("firebase-functions");
 // import * as admin from 'firebase-admin';
 const express = require("express");
 const cors = require("cors");
@@ -88,15 +86,17 @@ app.get('/api/countries', (req, res) => {
         res.status(500).json({ error: `failed to get countries with error: ${error.message} ` });
     }
 });
-// app.listen(3000, () => {
-//     // const title = figlet.textSync("Demo Server", {
-//     //     font: "Standard",
-//     //     horizontalLayout: "default",
-//     //     verticalLayout: "default",
-//     //     whitespaceBreak: false
-//     // });
-//     // logger().log(title, "\n\n");
-//     // logger().info(`Listening to port ${3000} \n`);
-// });
-exports.webApi = functions.https.onRequest(app);
+app.listen(3000, () => {
+    //     // const title = figlet.textSync("Demo Server", {
+    //     //     font: "Standard",
+    //     //     horizontalLayout: "default",
+    //     //     verticalLayout: "default",
+    //     //     whitespaceBreak: false
+    //     // });
+    //     // logger().log(title, "\n\n");
+    //     // logger().info(`Listening to port ${3000} \n`);
+    console.log('server 3000');
+});
+exports.default = app;
+// export const webApi = functions.https.onRequest(app);
 //# sourceMappingURL=index.js.map

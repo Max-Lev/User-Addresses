@@ -24,6 +24,9 @@
                 color="accent">Add city</button>
         </div>
     </section>
+    <ng-container *ngFor="let city of cities$ | async">
+        <p>{{city.name}}</p>
+    </ng-container>
 
     <mat-form-field appearance="outline">
         <mat-label>Street</mat-label>

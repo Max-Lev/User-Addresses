@@ -20,6 +20,7 @@ const countries = () => {
     }];
 
     const getCountryById = (id) => data.filter((country) => country.id === id);
+    
     const getCitiesByCountryId = (id) => {
         const country = getCountryById(id);
         if (!country.length) {
