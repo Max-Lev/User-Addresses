@@ -14,12 +14,14 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AddCityDialogComponent } from './components/add-city-dialog/add-city-dialog.component';
 import { PersonsService } from './providers/persons.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CitiesPipePipe } from '../pipes/cities-pipe.pipe';
 
 @NgModule({
   declarations: [
     ContainerComponent,
     UserAddressComponent,
-    AddCityDialogComponent
+    AddCityDialogComponent,
+    CitiesPipePipe
   ],
   imports: [
     CommonModule,

@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class CanActivateGuard implements CanActivate {
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    debugger;
     return false;
   }
 

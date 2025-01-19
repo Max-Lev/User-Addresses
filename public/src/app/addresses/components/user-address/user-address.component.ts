@@ -1,6 +1,6 @@
 import {
   AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input,
-  OnChanges, OnInit, Output, SimpleChanges
+  OnChanges, OnInit, Output, PipeTransform, SimpleChanges
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
@@ -16,7 +16,7 @@ import { Address } from '../../models/addresses.model';
   // standalone: true,
   // imports: [DEPENDENCIES]
 })
-export class UserAddressComponent implements OnInit, OnChanges, AfterViewInit {
+export class UserAddressComponent implements OnInit, OnChanges, AfterViewInit, PipeTransform {
 
   @Input() index: number = -1;
 
@@ -26,9 +26,11 @@ export class UserAddressComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() addCityEmitter: EventEmitter<{ formValue: Address, index: number }> = new EventEmitter();
 
-  @Input() countries$: Observable<Country[]>;
+  @Input() countries: Country[] = [];
+  // @Input() countries$: Observable<Country[]>;
 
-  @Input() cities$: Observable<City[]>;
+  // @Input() cities$: Observable<City[]>;
+  @Input() cities: City[] = [];
 
   sub$ = new Subject<boolean>();
 
@@ -37,13 +39,24 @@ export class UserAddressComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(private formBuilder: FormBuilder) {
 
   }
+  transform(value,countryList:Country[], activeCountry: number): City[] {
+    
+    const cities:City[] = countryList?.find(country=>{
+      if(country.id===activeCountry){
+        return country;
+      }else{
+        return null;
+      }     
+    })?.cities;
+    return cities as City[];
+  }
 
   ngOnInit(): void {
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
+    this.transform(this.cities,this.countries,this.name.get('countrId').value)
   }
 
   ngOnDestroy(): void {

@@ -31,7 +31,7 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   form: FormGroup = new FormGroup({});
 
-  cities$: Observable<City[]>;
+  cities: City[];
 
   countries$: Observable<Country[]>;
 
@@ -43,7 +43,10 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChildren(UserAddressComponent) userAddressViewChildren: QueryList<UserAddressComponent>;
 
+  selectedCountrId: number = -1;
+
   constructor(private formBuilder: FormBuilder,
+    private changeDetector: ChangeDetectorRef,
     // @Inject(UserAddressComponent) public userAddressComponent: UserAddressComponent,
     public userAddressComponent: UserAddressComponent,
     private personsService: PersonsService,
@@ -54,7 +57,6 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.countries$ = of(this.activatedRoute.snapshot.data['getCountries']);
-    // const countries = this.activatedRoute.snapshot.data['getCountries'];
     this.initForm();
   }
 
@@ -87,18 +89,25 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   counteryChangeHandler(action: { countryId: number, index: number }) {
-    
+
     const component = this.userAddressViewChildren.get(action.index);
-    component.cities$ = this.personsService.getCitiesByCountryId$(action.countryId);
+    // component.cities = this.personsService.getCitiesByCountryId$(action.countryId);
+    this.personsService.getCitiesByCountryId$(action.countryId).subscribe((cities:City[]) => {
+      component.cities = cities;
+      if(cities){
+        component.name.get('cityId').setValue(cities[0]?.id);
+      }
+    });
   }
 
   addCityEmitterHandler(payload: { formValue: Address, index: number }) {
 
     const component: UserAddressComponent = this.userAddressViewChildren.get(payload.index);
-    console.log('active component ',component)
+
     let cityPayload: City;
 
-    component.cities$ = this.dialog.open(AddCityDialogComponent, {
+    // component.cities = 
+    this.dialog.open(AddCityDialogComponent, {
       autoFocus: false,
       data: {
         countries$: this.countries$,
@@ -112,7 +121,7 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
         */
         if (data && data.cityName) {
           cityPayload = new City({ id: null, countryId: +payload.formValue.countrId, name: data.cityName });
-          return this.personsService.addCity$(cityPayload);
+          return this.personsService.addCity$(cityPayload).pipe(map(c => console.log(c)));
         } else {
           /*** 
           * @description in case of cancel 
@@ -120,28 +129,39 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
           return EMPTY;
         }
       }))
-      .pipe(mergeMap(() => {
-        return this.personsService.getCitiesByCountryId$(+payload.formValue.countrId);
-      }))
-      .pipe(map((cities: City[]) => {
-        debugger;
-        this.cities$ = of(cities);
-        this.newCity(cities, component, cityPayload);
-        return cities;
-      }));
+      .pipe(mergeMap(() => this.personsService.getCitiesByCountryId$(+payload.formValue.countrId)))
+      .subscribe((cities: City[]) => {
+        // component.cities = cities; // Assign the plain array
+        this.newCity(cities, component, cityPayload); // Perform additional actions
+        //solves sync of same country not with diff country: displays diff country list
+        component.cities = cities;
+
+        // this.changeDetector.detectChanges();
+        // this.newCity(cities, component, cityPayload); // Perform additional actions
+        
+        // this.newCity(cities, component, cityPayload);
+        // return this.cities;
+      })
+    // .pipe(map((cities: City[]) => {
+    
+    //   this.cities = cities;
+    //   this.newCity(cities, component, cityPayload);
+    //   return cities.map(c=>c);
+    //   // pipe(map((array) => array.map((value) => value * 2))
+    //   // return this.cities.map(c=>array.);
+    // }));
 
   }
 
   newCity(cities: City[], component: UserAddressComponent, cityPayload: City) {
-    this.personsService.getCountries$().subscribe(c=>console.log(c));
-    console.log(this.getAddressesArray);
-    debugger;
+
     const newCity = cities.find((city: City) => city.name === cityPayload.name);
     const componentForm = component.name as FormGroup;
     this.getAddressesArray.controls[component.index].get('cityId').setValue(newCity.id);
     this.getAddressesArray.controls[component.index].updateValueAndValidity({ emitEvent: false, onlySelf: true });
     // componentForm.get('cityId').setValue(newCity.id);
     // componentForm.get('cityId').updateValueAndValidity({ emitEvent: true, onlySelf: false });
+
   }
 
   save() {
@@ -159,3 +179,61 @@ export class ContainerComponent implements OnInit, OnDestroy, AfterViewInit {
 }
 
 
+// addCityEmitterHandler(payload: { formValue: Address, index: number }) {
+
+//   const component: UserAddressComponent = this.userAddressViewChildren.get(payload.index);
+//   console.log('active component ',component)
+//   let cityPayload: City;
+
+//   // component.cities = 
+//   this.dialog.open(AddCityDialogComponent, {
+//     autoFocus: false,
+//     data: {
+//       countries$: this.countries$,
+//       countryId: payload.formValue.countrId
+//     }
+//   }).afterClosed()
+//     .pipe(takeUntil(this.sub$))
+//     .pipe(mergeMap((data: { cityName: string }) => {
+//       /** 
+//        * @description in case of ok
+//       */
+//       if (data && data.cityName) {
+//         cityPayload = new City({ id: null, countryId: +payload.formValue.countrId, name: data.cityName });
+//         return this.personsService.addCity$(cityPayload).pipe(map(c=>console.log(c)));
+//       } else {
+//         /*** 
+//         * @description in case of cancel 
+//         */
+//         return EMPTY;
+//       }
+//     }))
+//     .pipe(mergeMap(() => {
+//       return this.personsService.getCitiesByCountryId$(+payload.formValue.countrId).pipe(map(c=>
+//       {
+//         console.log(c);
+//         return c;
+//       }
+//       ));;
+//     }))
+//     .subscribe((cities:City[])=>{
+//       // component.cities = cities; // Assign the plain array
+//       this.newCity(cities, component, cityPayload); // Perform additional actions
+//       //solves sync of same country not with diff country: displays diff country list
+//       this.cities = cities;
+//       component.cities = cities;
+//       // this.newCity(cities, component, cityPayload); // Perform additional actions
+
+//       // this.newCity(cities, component, cityPayload);
+//       // return this.cities;
+//     })
+//     // .pipe(map((cities: City[]) => {
+
+//     //   this.cities = cities;
+//     //   this.newCity(cities, component, cityPayload);
+//     //   return cities.map(c=>c);
+//     //   // pipe(map((array) => array.map((value) => value * 2))
+//     //   // return this.cities.map(c=>array.);
+//     // }));
+
+// }

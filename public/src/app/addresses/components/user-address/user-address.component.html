@@ -8,7 +8,8 @@
     <mat-form-field>
         <mat-label>Select Country</mat-label>
         <mat-select formControlName="countrId">
-            <mat-option [value]="country.id" *ngFor="let country of countries$ | async">{{country.name}}</mat-option>
+            <!-- <mat-option [value]="country.id" *ngFor="let country of countries$ | async">{{country.name}}</mat-option> -->
+            <mat-option [value]="country.id" *ngFor="let country of countries">{{country.name}}</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -16,7 +17,8 @@
         <mat-form-field>
             <mat-label>Select City</mat-label>
             <mat-select formControlName="cityId">
-                <mat-option [value]="city.id" *ngFor="let city of cities$ | async">{{city.name}}</mat-option>
+                <!-- <mat-option [value]="city.id" *ngFor="let city of cities | citiesPipe:countries : this.name.get('countrId').value">{{city.name}}</mat-option> -->
+                <mat-option [value]="city.id" *ngFor="let city of cities">{{city.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <div class="add-city-wrapper">
@@ -24,9 +26,9 @@
                 color="accent">Add city</button>
         </div>
     </section>
-    <ng-container *ngFor="let city of cities$ | async">
+    <!-- <ng-container *ngFor="let city of cities">
         <p>{{city.name}}</p>
-    </ng-container>
+    </ng-container> -->
 
     <mat-form-field appearance="outline">
         <mat-label>Street</mat-label>

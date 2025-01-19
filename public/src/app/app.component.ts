@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'seaLights';
+  constructor(){
+    console.log('version 1.1');
+  }
 }
